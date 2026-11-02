@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cẩm Nang & Bài Tập Thực Hành T-SQL - Quản Trị Hệ Thống CSDL</title>
+  <title>Cẩm Nang Toàn Diện & Thực Hành Chuyên Sâu T-SQL - Quản Trị Hệ Thống CSDL</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
     pre, code, .font-mono { font-family: 'JetBrains Mono', monospace; }
     .tab-content { display: none; }
@@ -17,30 +17,33 @@
     .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .code-scroll::-webkit-scrollbar { height: 6px; }
+    .code-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white shadow-lg sticky top-0 z-50">
+  <header class="bg-gradient-to-r from-slate-950 via-blue-950 to-indigo-950 text-white shadow-xl sticky top-0 z-50 border-b border-blue-900/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div class="flex items-center gap-3">
-            <span class="p-2 bg-blue-700/60 rounded-lg text-blue-200 text-xl"><i class="fa-solid fa-database"></i></span>
+            <span class="p-2.5 bg-blue-600/30 rounded-xl text-blue-300 text-2xl border border-blue-500/30 shadow-inner"><i class="fa-solid fa-server"></i></span>
             <div>
-              <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Hệ Thống Thực Hành T-SQL Cơ Sở Dữ Liệu</h1>
-              <p class="text-xs sm:text-sm text-blue-200 font-light">Môn: Quản Trị Hệ Thống CSDL • Trường TC Kinh Tế - Kỹ Thuật TP. Cần Thơ</p>
+              <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-indigo-200">
+                Chuyên Đề Quản Trị Hệ Thống CSDL & T-SQL Nâng Cao
+              </h1>
+              <p class="text-xs sm:text-sm text-blue-300/80 font-light mt-0.5">Khoa Công Nghệ Thông Tin • Giáo trình Quản Trị Hệ Thống Cơ Sở Dữ Liệu</p>
             </div>
           </div>
         </div>
-        <!-- Quick stats / badges -->
         <div class="flex items-center gap-2 self-start md:self-auto">
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-            <i class="fa-solid fa-code mr-1.5"></i> SQL Server / T-SQL
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/30">
+            <i class="fa-solid fa-microchip mr-1.5"></i> SQL Engine Deep-Dive
           </span>
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-300 border border-blue-500/30">
-            <i class="fa-solid fa-book-bookmark mr-1.5"></i> Giáo Trình Chuẩn
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+            <i class="fa-solid fa-shield-halved mr-1.5"></i> Production Standard
           </span>
         </div>
       </div>
@@ -48,285 +51,505 @@
       <!-- Navigation Tabs -->
       <nav class="flex space-x-1 sm:space-x-2 mt-5 overflow-x-auto pb-1 custom-scrollbar text-sm font-medium">
         <button onclick="switchTab('theory')" id="tab-btn-theory" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2 whitespace-nowrap active bg-white/15 text-white">
-          <i class="fa-solid fa-book-open text-blue-400"></i> Lý Thuyết Cốt Lõi Chuyên Sâu
+          <i class="fa-solid fa-book-open text-blue-400"></i> Lý Thuyết Kiến Trúc & Cú Pháp Toàn Diện
         </button>
         <button onclick="switchTab('sample')" id="tab-btn-sample" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2 whitespace-nowrap">
-          <i class="fa-solid fa-lightbulb text-amber-400"></i> Bài Mẫu & Phân Tích Đa Tầng
+          <i class="fa-solid fa-lightbulb text-amber-400"></i> Bài Mẫu & Phân Tích Logic Đa Tầng
         </button>
         <button onclick="switchTab('lab')" id="tab-btn-lab" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2 whitespace-nowrap">
-          <i class="fa-solid fa-laptop-code text-emerald-400"></i> 3 Bài Thực Hành Tại Lớp
+          <i class="fa-solid fa-laptop-code text-emerald-400"></i> 3 Bài Thực Hành Trên Lớp
         </button>
         <button onclick="switchTab('homework')" id="tab-btn-homework" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2 whitespace-nowrap">
-          <i class="fa-solid fa-pencil-ruler text-purple-400"></i> Bài Tập Về Nhà
+          <i class="fa-solid fa-pencil-ruler text-purple-400"></i> Bài Tập Tự Luyện Về Nhà
         </button>
         <button onclick="switchTab('errors')" id="tab-btn-errors" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2 whitespace-nowrap">
-          <i class="fa-solid fa-triangle-exclamation text-rose-400"></i> Cẩm Nang Fix Lỗi
+          <i class="fa-solid fa-bug text-rose-400"></i> Cẩm Nang Fix 10+ Lỗi Kinh Điển
         </button>
         <button onclick="switchTab('quiz')" id="tab-btn-quiz" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2 whitespace-nowrap">
-          <i class="fa-solid fa-circle-question text-sky-400"></i> Trắc Nghiệm Ôn Tập
+          <i class="fa-solid fa-circle-question text-sky-400"></i> Trắc Nghiệm Ôn Tập (10 Câu)
         </button>
       </nav>
     </div>
   </header>
 
   <!-- Main Content Container -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
 
-    <!-- ==================== TAB 1: LÝ THUYẾT CỐT LÕI CHUYÊN SÂU ==================== -->
+    <!-- ==================== TAB 1: LÝ THUYẾT KIẾN TRÚC & CÚ PHÁP TOÀN DIỆN ==================== -->
     <section id="tab-theory" class="tab-content active space-y-8">
-      <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
-        <h2 class="text-lg font-bold text-blue-900 flex items-center gap-2">
-          <i class="fa-solid fa-circle-info text-blue-600"></i> Kiến Trúc Vận Hành & Bản Chất SQL Server Chuyên Sâu
+      
+      <!-- Banner giới thiệu -->
+      <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 rounded-2xl shadow-md border border-blue-800">
+        <h2 class="text-xl font-bold flex items-center gap-2.5">
+          <i class="fa-solid fa-layer-group text-blue-300"></i> Bách Khoa Toàn Thư Kiến Trúc SQL Server & Lập Trình T-SQL
         </h2>
-        <p class="text-sm text-blue-800 mt-1">
-          Hệ thống hóa toàn bộ cấu trúc vật lý, cơ chế nhật ký ghi trước (WAL), các ràng buộc toàn vẹn, nguyên lý thực thi logic SELECT và giải thuật sao lưu/phục hồi theo giáo trình.
+        <p class="text-xs sm:text-sm text-blue-100/90 mt-2 leading-relaxed">
+          Tài liệu này không dừng lại ở việc học thuộc câu lệnh, mà phân tích sâu về <b>cấu trúc nhị phân trang dữ liệu (Data Page)</b>, <b>cơ chế kiểm soát ACID</b>, <b>chu trình phục hồi thảm họa WAL (Write-Ahead Logging)</b>, <b>đại số quan hệ toán học đằng sau các phép JOIN</b>, và <b>pipeline thực thi truy vấn nội vi</b> của SQL Engine.
         </p>
       </div>
 
-      <!-- Phần 1: Kiến trúc vật lý -->
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
-        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2 border-b pb-3">
-          <span class="w-7 h-7 rounded-lg bg-blue-100 text-blue-800 flex items-center justify-center text-sm font-bold">1</span>
-          Cấu Trúc Vật Lý & Cơ Chế Write-Ahead Logging (WAL)
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
-          <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
-            <h4 class="font-bold text-blue-900 flex items-center gap-1.5"><i class="fa-solid fa-file-code text-blue-600"></i> Primary Data File (.mdf)</h4>
-            <p class="text-slate-600">Chứa toàn bộ dữ liệu người dùng, đối tượng bảng (Tables), chỉ mục (Indexes) và các bảng hệ thống (System Tables). Kích thước khởi tạo ban đầu tối thiểu bằng CSDL <code class="text-indigo-600 font-mono">model</code> (khoảng 1.5MB).</p>
+      <!-- Mục 1: Kiến trúc vật lý & Lưu trữ đĩa cứng -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Chương 1 & 9</span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-2 flex items-center gap-2">
+            <i class="fa-solid fa-hard-drive text-blue-600"></i> 1. Cấu Trúc Vật Lý & Cơ Chế Cấp Phát Bộ Nhớ Trong SQL Server
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Cách SQL Server tổ chức các byte trên đĩa cứng và trên bộ nhớ RAM (Buffer Pool).</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Cấu trúc file -->
+          <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs sm:text-sm">
+            <h4 class="font-bold text-slate-900 flex items-center gap-2 text-sm text-blue-800">
+              <i class="fa-solid fa-folder-tree"></i> Phân loại tệp tin CSDL vật lý:
+            </h4>
+            <ul class="space-y-2 text-slate-700">
+              <li>
+                <b class="text-indigo-900 font-mono">1. Primary Data File (.mdf):</b> Tệp dữ liệu chính, điểm khởi đầu của CSDL. Lưu trữ con trỏ tới tất cả các tệp khác, metadata hệ thống và dữ liệu người dùng. Mỗi CSDL chỉ có <b>chính xác 1 tệp .mdf</b>. Dung lượng tối thiểu phải bằng CSDL khuôn mẫu <code class="text-blue-700">model</code> (khoảng 1.5MB).
+              </li>
+              <li>
+                <b class="text-indigo-900 font-mono">2. Secondary Data File (.ndf):</b> Tệp dữ liệu phụ, không bắt buộc. Được sử dụng khi CSDL quá lớn, cho phép phân tách bảng và chỉ mục sang các ổ đĩa cứng vật lý khác nhau (striping) để tăng tốc độ đọc/ghi I/O đồng thời.
+              </li>
+              <li>
+                <b class="text-indigo-900 font-mono">3. Transaction Log File (.ldf):</b> Tệp nhật ký giao tác. Ghi lại từng thao tác sửa đổi nhị phân. Không lưu bảng hay chỉ mục. Phải có ít nhất 1 tệp .ldf cho mỗi CSDL.
+              </li>
+            </ul>
           </div>
-          <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
-            <h4 class="font-bold text-blue-900 flex items-center gap-1.5"><i class="fa-solid fa-file-lines text-amber-600"></i> Transaction Log (.ldf)</h4>
-            <p class="text-slate-600">Lưu lại toàn bộ lịch sử các thao tác làm biến đổi dữ liệu (INSERT, UPDATE, DELETE). Đóng vai trò sống còn trong việc khôi phục Roll Forward và Roll Back khi hệ thống bị sập nguồn đột ngột.</p>
-          </div>
-          <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
-            <h4 class="font-bold text-blue-900 flex items-center gap-1.5"><i class="fa-solid fa-cubes text-emerald-600"></i> Page (8KB) & Extent (64KB)</h4>
-            <p class="text-slate-600">Dữ liệu được tổ chức thành từng trang Page 8KB. Cứ 8 trang liên tục tạo thành một Extent. Gồm Mixed Extent (chứa dữ liệu của nhiều bảng) và Uniform Extent (dành riêng cho một bảng khi phình to).</p>
+
+          <!-- Cấu trúc Page & Extent -->
+          <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs sm:text-sm">
+            <h4 class="font-bold text-slate-900 flex items-center gap-2 text-sm text-blue-800">
+              <i class="fa-solid fa-cubes-stacked"></i> Đơn vị lưu trữ vi mô: Page & Extent
+            </h4>
+            <ul class="space-y-2 text-slate-700">
+              <li>
+                <b class="text-slate-900">Data Page (8 KB = 8,192 bytes):</b> Là đơn vị I/O cơ sở. Mọi thao tác đọc/ghi đĩa đều diễn ra theo từng Page nguyên vẹn.
+                <div class="bg-white p-2.5 rounded border border-slate-200 mt-1 font-mono text-xs space-y-1">
+                  <div>• <b>Page Header (96 bytes):</b> Lưu Page ID, Type, Free Space, LSN...</div>
+                  <div>• <b>Data Rows:</b> Dữ liệu thực tế. Độ dài tối đa 1 dòng là <b>8,060 bytes</b>.</div>
+                  <div>• <b>Row Offset Table (cuối trang):</b> Mảng 2-byte trỏ đến vị trí từng dòng.</div>
+                </div>
+              </li>
+              <li>
+                <b class="text-slate-900">Extent (64 KB = 8 Data Pages liên tục):</b>
+                <p class="mt-0.5">• <b>Mixed Extent:</b> Chứa trang của tối đa 8 đối tượng bảng khác nhau (tiết kiệm không gian cho bảng nhỏ).</p>
+                <p>• <b>Uniform Extent:</b> Toàn bộ 8 trang thuộc sở hữu của duy nhất 1 bảng khi bảng đó đã phát triển đủ lớn.</p>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div class="bg-indigo-50/70 p-4 rounded-lg border border-indigo-200 text-xs sm:text-sm space-y-2">
-          <h4 class="font-bold text-indigo-950 flex items-center gap-2"><i class="fa-solid fa-arrows-spin text-indigo-600"></i> Tiến Trình Xử Lý Giao Tác & Checkpoint:</h4>
-          <ol class="list-decimal list-inside space-y-1 text-slate-700">
-            <li><b>Bước 1:</b> Ứng dụng gửi yêu cầu DML, SQL Server nạp trang dữ liệu tương ứng lên bộ nhớ RAM (gọi là <i>Data Cache</i>), các trang bị thay đổi gọi là <i>dirty-page</i>.</li>
-            <li><b>Bước 2 (Write-Ahead):</b> Mọi thay đổi bắt buộc phải được ghi ngay vào file <b>.ldf (Transaction Log)</b> trên đĩa cứng trước.</li>
-            <li><b>Bước 3 (Checkpoint):</b> Tiến trình <i>Checkpoint Process</i> định kỳ quét các dirty-page đã commit (hoàn tất) và đẩy xuống file <b>.mdf</b>.</li>
-            <li><b>Khôi phục sự cố:</b> Khi máy khởi động lại sau sự cố, giao dịch commit sau checkpoint sẽ được <b>Roll Forward</b> từ log file; giao dịch chưa commit sẽ bị <b>Roll Back</b> để trả về trạng thái nguyên vẹn.</li>
-          </ol>
+        <!-- WAL & Checkpoint Process -->
+        <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-slate-200 p-5 rounded-xl border border-slate-800 space-y-3 text-xs sm:text-sm">
+          <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-arrows-rotate"></i> Cơ Chế Giao Tác ACID, Write-Ahead Logging (WAL) & Tiến Trình Checkpoint
+          </h4>
+          <p class="leading-relaxed">
+            SQL Server không bao giờ ghi trực tiếp dữ liệu sửa đổi xuống file <code class="text-indigo-300 font-mono">.mdf</code> ngay lập tức vì ghi ngẫu nhiên (random disk write) rất chậm. Chu trình chuẩn diễn ra như sau:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs font-mono text-slate-300 pt-1">
+            <div class="bg-white/5 p-3 rounded-lg border border-white/10">
+              <span class="text-amber-400 font-bold block mb-1">BƯỚC 1: SỬA RAM</span>
+              Dữ liệu được đọc vào Buffer Pool. Khi có lệnh Update, trang bị sửa thành <b class="text-white">Dirty Page</b> trên RAM.
+            </div>
+            <div class="bg-white/5 p-3 rounded-lg border border-white/10">
+              <span class="text-amber-400 font-bold block mb-1">BƯỚC 2: GHI LOG (WAL)</span>
+              Hành động sửa đổi bắt buộc phải ghi tuần tự vào file <b class="text-white">.ldf</b> trên đĩa trước khi báo Commit thành công.
+            </div>
+            <div class="bg-white/5 p-3 rounded-lg border border-white/10">
+              <span class="text-amber-400 font-bold block mb-1">BƯỚC 3: CHECKPOINT</span>
+              Định kỳ, Checkpoint Process quét toàn bộ Dirty Pages trên RAM và đẩy đồng loạt xuống file <b class="text-white">.mdf</b>.
+            </div>
+            <div class="bg-white/5 p-3 rounded-lg border border-white/10">
+              <span class="text-amber-400 font-bold block mb-1">BƯỚC 4: RECOVERY</span>
+              Khi máy sập: Giao dịch đã commit &rarr; <b class="text-emerald-400">Roll Forward</b> (tạo lại). Chưa commit &rarr; <b class="text-rose-400">Roll Back</b> (hủy bỏ).
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Phần 2: Bảng tra cứu ràng buộc toàn vẹn -->
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
-        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2 border-b pb-3">
-          <span class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-800 flex items-center justify-center text-sm font-bold">2</span>
-          Bảng Tra Cứu Các Ràng Buộc Toàn Vẹn Dữ Liệu (Constraints)
-        </h3>
-        <div class="overflow-x-auto custom-scrollbar">
-          <table class="w-full text-left text-xs sm:text-sm border-collapse">
-            <thead>
-              <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                <th class="p-3 font-bold">Tên Ràng Buộc</th>
-                <th class="p-3 font-bold">Cú Pháp Định Nghĩa Chuẩn</th>
-                <th class="p-3 font-bold">Bản Chất Hệ Thống & Đặc Điểm Cần Nhớ</th>
+      <!-- Mục 2: Ràng buộc toàn vẹn & Phụ thuộc hàm -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md">Chương 5, 6 & 7</span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-2 flex items-center gap-2">
+            <i class="fa-solid fa-lock text-indigo-600"></i> 2. Lý Thuyết Toàn Vẹn Thực Thể, Toàn Vẹn Tham Chiếu & Chuẩn Hóa
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Cơ sở lý thuyết phụ thuộc hàm (Armstrong) và chi tiết kỹ thuật của các ràng buộc T-SQL.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+          <div class="space-y-3">
+            <h4 class="font-bold text-slate-900 text-sm">Hệ Tiên Đề Armstrong & Khóa (Keys):</h4>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-slate-700">
+              <p>• <b>Siêu khóa (Superkey):</b> Tập thuộc tính xác định duy nhất mỗi bộ (dòng) trong bảng.</p>
+              <p>• <b>Khóa chỉ định / Khóa dự tuyển (Candidate Key):</b> Siêu khóa tối tiểu (không thể bớt bất kỳ thuộc tính nào mà vẫn duy trì tính duy nhất).</p>
+              <p>• <b>Khóa chính (Primary Key):</b> Khóa được chọn để cài đặt vật lý. Không chứa NULL.</p>
+              <p>• <b>3 Luật Armstrong cơ bản:</b></p>
+              <ul class="list-disc list-inside pl-2 space-y-1 font-mono text-xs text-indigo-900">
+                <li>Phản xạ: Nếu Y &sube; X thì X &rarr; Y.</li>
+                <li>Tăng trưởng: Nếu X &rarr; Y thì XZ &rarr; YZ.</li>
+                <li>Bắc cầu: Nếu X &rarr; Y và Y &rarr; Z thì X &rarr; Z.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="font-bold text-slate-900 text-sm">Hành Vi Khóa Ngoại (Foreign Key Referential Actions):</h4>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-slate-700">
+              <p>Khi một dòng ở bảng cha bị xóa (<code class="font-mono text-rose-700">ON DELETE</code>) hoặc cập nhật (<code class="font-mono text-blue-700">ON UPDATE</code>), bảng con có thể xử lý theo 4 cơ chế:</p>
+              <ul class="space-y-1 text-xs">
+                <li><b class="text-rose-700 font-mono">NO ACTION (Mặc định):</b> Báo lỗi và hủy bỏ toàn bộ câu lệnh nếu có dữ liệu con đang tham chiếu.</li>
+                <li><b class="text-indigo-700 font-mono">CASCADE:</b> Tự động xóa hoặc cập nhật theo dây chuyền các dòng con liên quan.</li>
+                <li><b class="text-amber-700 font-mono">SET NULL:</b> Đặt giá trị cột khóa ngoại ở bảng con thành NULL (nếu cột cho phép NULL).</li>
+                <li><b class="text-emerald-700 font-mono">SET DEFAULT:</b> Gán lại giá trị ngầm định đã cấu hình của cột khóa ngoại.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bảng so sánh 6 ràng buộc -->
+        <div class="overflow-x-auto custom-scrollbar pt-2">
+          <table class="w-full text-left text-xs sm:text-sm border border-slate-200 rounded-xl overflow-hidden">
+            <thead class="bg-slate-800 text-white">
+              <tr>
+                <th class="p-3 font-semibold">Tên Ràng Buộc</th>
+                <th class="p-3 font-semibold">Mục Đích Bảo Vệ</th>
+                <th class="p-3 font-semibold">Chấp Nhận NULL?</th>
+                <th class="p-3 font-semibold">Số Lượng / Bảng</th>
+                <th class="p-3 font-semibold">Tạo Index Mặc Định?</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-200 text-slate-600">
-              <tr class="hover:bg-slate-50">
-                <td class="p-3 font-bold text-rose-700 font-mono">PRIMARY KEY</td>
-                <td class="p-3 font-mono text-indigo-900">CONSTRAINT PK_Ten PRIMARY KEY (Cot)</td>
-                <td class="p-3">Định danh duy nhất bản ghi; bắt buộc NOT NULL; mỗi bảng <b>duy nhất 1</b> khóa chính; mặc định tạo chỉ mục Clustered Index.</td>
+            <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
+              <tr>
+                <td class="p-3 font-mono font-bold text-rose-700">PRIMARY KEY</td>
+                <td class="p-3">Toàn vẹn thực thể, định danh dòng duy nhất</td>
+                <td class="p-3 font-bold text-rose-600">KHÔNG</td>
+                <td class="p-3 font-bold">Duy nhất 1</td>
+                <td class="p-3 text-emerald-700 font-semibold">CLUSTERED INDEX</td>
               </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-3 font-bold text-blue-700 font-mono">FOREIGN KEY</td>
-                <td class="p-3 font-mono text-indigo-900">CONSTRAINT FK_Ten FOREIGN KEY (Cot) REFERENCES BangCha(CotCha)</td>
-                <td class="p-3">Bảo toàn tham chiếu 2 bảng; giá trị phải tồn tại ở bảng cha hoặc là NULL. Bảng cha phải tạo trước bảng con.</td>
+              <tr>
+                <td class="p-3 font-mono font-bold text-purple-700">UNIQUE</td>
+                <td class="p-3">Ngăn trùng lặp dữ liệu trên các cột không làm khóa chính</td>
+                <td class="p-3 font-bold text-emerald-600">CÓ (Tối đa 1 dòng)</td>
+                <td class="p-3">Nhiều ràng buộc</td>
+                <td class="p-3 text-blue-700 font-semibold">NON-CLUSTERED INDEX</td>
               </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-3 font-bold text-emerald-700 font-mono">CHECK</td>
-                <td class="p-3 font-mono text-indigo-900">CONSTRAINT CK_Ten CHECK (Biểu_thức_logic)</td>
-                <td class="p-3">Kiểm tra giá trị nhập vào theo quy tắc (ví dụ: <code class="font-mono text-emerald-800">Luong > 500</code> hoặc <code class="font-mono text-emerald-800">Diem BETWEEN 0 AND 10</code>).</td>
+              <tr>
+                <td class="p-3 font-mono font-bold text-blue-700">FOREIGN KEY</td>
+                <td class="p-3">Toàn vẹn tham chiếu, liên kết cha - con</td>
+                <td class="p-3 font-bold text-emerald-600">CÓ</td>
+                <td class="p-3">Nhiều ràng buộc</td>
+                <td class="p-3 text-slate-500">Không (khuyên tạo thủ công)</td>
               </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-3 font-bold text-amber-700 font-mono">DEFAULT</td>
-                <td class="p-3 font-mono text-indigo-900">CONSTRAINT DF_Ten DEFAULT 'GiaTri' FOR Cot</td>
-                <td class="p-3">Tự động gán giá trị mặc định khi người dùng INSERT mà để trống. Không can thiệp vào lệnh UPDATE.</td>
+              <tr>
+                <td class="p-3 font-mono font-bold text-emerald-700">CHECK</td>
+                <td class="p-3">Toàn vẹn miền giá trị (Domain Integrity)</td>
+                <td class="p-3 font-bold text-emerald-600">CÓ (NULL bỏ qua kiểm tra)</td>
+                <td class="p-3">Nhiều ràng buộc</td>
+                <td class="p-3 text-slate-500">Không</td>
               </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-3 font-bold text-purple-700 font-mono">UNIQUE</td>
-                <td class="p-3 font-mono text-indigo-900">CONSTRAINT UNQ_Ten UNIQUE (Cot)</td>
-                <td class="p-3">Bảo đảm giá trị không trùng lặp; 1 bảng có thể có <b>nhiều</b> UNIQUE; <b>cho phép</b> chứa giá trị NULL.</td>
+              <tr>
+                <td class="p-3 font-mono font-bold text-amber-700">DEFAULT</td>
+                <td class="p-3">Gán giá trị tự động khi thiếu đầu vào lúc INSERT</td>
+                <td class="p-3 font-bold text-emerald-600">CÓ</td>
+                <td class="p-3">1 per column</td>
+                <td class="p-3 text-slate-500">Không</td>
               </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-3 font-bold text-sky-700 font-mono">IDENTITY</td>
-                <td class="p-3 font-mono text-indigo-900">Cot KieuSo IDENTITY(seed, increment)</td>
-                <td class="p-3">Tự động sinh số tăng dần (ví dụ <code class="font-mono text-sky-800">IDENTITY(1,1)</code> bắt đầu từ 1, tăng 1); người dùng không được gõ giá trị thủ công.</td>
+              <tr>
+                <td class="p-3 font-mono font-bold text-sky-700">IDENTITY</td>
+                <td class="p-3">Tự động tăng số thứ tự đại diện</td>
+                <td class="p-3 font-bold text-rose-600">KHÔNG</td>
+                <td class="p-3 font-bold">Tối đa 1 cột / bảng</td>
+                <td class="p-3 text-slate-500">Không</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Phần 3: Thứ tự SELECT & WHERE vs HAVING -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
-          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2 border-b pb-3">
-            <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm font-bold">3</span>
-            Thứ Tự Xử Lý Logic Của Câu Lệnh SELECT
+      <!-- Mục 3: Pipeline thực thi SELECT & Phép toán đại số quan hệ -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">Chương 4 & Đại Số Quan Hệ</span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-2 flex items-center gap-2">
+            <i class="fa-solid fa-calculator text-emerald-600"></i> 3. Đại Số Quan Hệ Toán Học & Pipeline Thực Thi Truy Vấn SELECT
           </h3>
-          <p class="text-xs sm:text-sm text-slate-600">SQL Server thực thi các mệnh đề theo thứ tự logic bên dưới chứ không theo thứ tự viết code:</p>
-          <div class="space-y-2 text-xs sm:text-sm font-mono">
-            <div class="p-2 rounded bg-slate-100 text-slate-800 flex items-center justify-between"><span>[1] FROM & JOIN</span><span class="text-slate-400 font-sans text-xs">Xác định bảng nguồn</span></div>
-            <div class="p-2 rounded bg-slate-100 text-slate-800 flex items-center justify-between"><span>[2] WHERE</span><span class="text-slate-400 font-sans text-xs">Lọc từng dòng đơn lẻ</span></div>
-            <div class="p-2 rounded bg-slate-100 text-slate-800 flex items-center justify-between"><span>[3] GROUP BY</span><span class="text-slate-400 font-sans text-xs">Chia nhóm dữ liệu</span></div>
-            <div class="p-2 rounded bg-slate-100 text-slate-800 flex items-center justify-between"><span>[4] HAVING</span><span class="text-slate-400 font-sans text-xs">Lọc trên nhóm (hàm aggregate)</span></div>
-            <div class="p-2 rounded bg-slate-100 text-slate-800 flex items-center justify-between"><span>[5] SELECT</span><span class="text-slate-400 font-sans text-xs">Trích xuất cột & tính toán AS</span></div>
-            <div class="p-2 rounded bg-slate-100 text-slate-800 flex items-center justify-between"><span>[6] ORDER BY</span><span class="text-slate-400 font-sans text-xs">Sắp xếp tăng/giảm dần</span></div>
-          </div>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Cơ chế máy tính thực hiện các phép chọn, chiếu, tích Descartes và luồng xử lý truy vấn.</p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
-          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2 border-b pb-3">
-            <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center text-sm font-bold">4</span>
-            Phân Biệt Cốt Tử: WHERE vs HAVING
-          </h3>
-          <div class="space-y-3 text-xs sm:text-sm text-slate-600">
-            <div class="p-3 bg-amber-50 rounded-lg border border-amber-200">
-              <h4 class="font-bold text-amber-900 mb-1"><i class="fa-solid fa-filter text-amber-600"></i> Mệnh đề WHERE:</h4>
-              <p>Lọc các hàng dữ liệu đơn lẻ <b>trước khi</b> phân nhóm. <b>CẤM TUYỆT ĐỐI</b> đưa các hàm nhóm (như <code class="font-mono text-rose-700">AVG()</code>, <code class="font-mono text-rose-700">SUM()</code>, <code class="font-mono text-rose-700">COUNT()</code>) trực tiếp vào WHERE.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+          <div class="space-y-3">
+            <h4 class="font-bold text-slate-900 text-sm">Các Phép Toán Đại Số Quan Hệ Cơ Bản:</h4>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-slate-700 font-mono text-xs">
+              <p>• <b>Phép chọn &sigma; (Restriction / Selection):</b> Lấy ra các bộ (dòng) thỏa điều kiện vị từ: <span class="text-blue-700">&sigma;<sub>Luong > 500</sub>(NHANVIEN)</span> &rarr; Tương đương mệnh đề <b class="text-slate-900">WHERE</b>.</p>
+              <p>• <b>Phép chiếu &pi; (Projection):</b> Rút trích theo chiều dọc các cột mong muốn: <span class="text-blue-700">&pi;<sub>HoTen, Luong</sub>(NHANVIEN)</span> &rarr; Tương đương danh sách sau <b class="text-slate-900">SELECT</b>.</p>
+              <p>• <b>Tích Descartes (&times;):</b> Ghép mọi dòng của bảng R với mọi dòng của bảng S (m dòng &times; n dòng).</p>
+              <p>• <b>Phép nối kết &theta; (Join):</b> Thực hiện tích Descartes sau đó áp dụng phép chọn theo điều kiện &theta; so sánh thuộc tính: <span class="text-blue-700">R ⋈<sub>R.MaDV = S.MaDV</sub> S</span>.</p>
+              <p>• <b>Phép kết tự nhiên (Natural Join):</b> Phép kết bằng trên tất cả các thuộc tính có cùng tên giữa 2 quan hệ và loại bỏ các cột trùng lặp.</p>
             </div>
-            <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
-              <h4 class="font-bold text-blue-900 mb-1"><i class="fa-solid fa-layer-group text-blue-600"></i> Mệnh đề HAVING:</h4>
-              <p>Lọc các nhóm dữ liệu <b>sau khi</b> đã thực thi GROUP BY. Được thiết kế chuyên biệt để kiểm tra kết quả của hàm nhóm (ví dụ: <code class="font-mono text-blue-800">HAVING AVG(Luong) > 600</code>).</p>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="font-bold text-slate-900 text-sm">Quy Trình Xử Lý Thực Tế 8 Bước (Query Execution Order):</h4>
+            <div class="space-y-1.5 font-mono text-xs">
+              <div class="p-2 rounded bg-slate-100 flex items-center justify-between"><b>(1) FROM & JOIN:</b> <span class="text-slate-500 font-sans">Nạp các bảng và tạo tích Descartes / nối On</span></div>
+              <div class="p-2 rounded bg-slate-100 flex items-center justify-between"><b>(2) WHERE:</b> <span class="text-slate-500 font-sans">Loại bỏ các dòng không thỏa biểu thức logic</span></div>
+              <div class="p-2 rounded bg-slate-100 flex items-center justify-between"><b>(3) GROUP BY:</b> <span class="text-slate-500 font-sans">Thu gọn các dòng cùng giá trị thành 1 đại diện nhóm</span></div>
+              <div class="p-2 rounded bg-slate-100 flex items-center justify-between"><b>(4) HAVING:</b> <span class="text-slate-500 font-sans">Lọc bỏ các nhóm không đạt tiêu chuẩn hàm nhóm</span></div>
+              <div class="p-2 rounded bg-slate-100 flex items-center justify-between"><b>(5) SELECT:</b> <span class="text-slate-500 font-sans">Tính toán biểu thức, lấy danh sách cột, gán Alias</span></div>
+              <div class="p-2 rounded bg-slate-100 flex items-center justify-between"><b>(6) DISTINCT:</b> <span class="text-slate-500 font-sans">Khử các dòng trùng lặp trong tập kết quả</span></div>
+              <div class="p-2 rounded bg-slate-100 flex items-center justify-between"><b>(7) ORDER BY:</b> <span class="text-slate-500 font-sans">Sắp xếp các dòng (tiêu tốn bộ nhớ tempdb)</span></div>
+              <div class="p-2 rounded bg-slate-100 flex items-center justify-between"><b>(8) TOP / OFFSET:</b> <span class="text-slate-500 font-sans">Rút trích số lượng dòng theo yêu cầu phân trang</span></div>
             </div>
-            <p class="text-xs text-slate-500 italic"><b>Quy tắc vàng:</b> Bất kỳ cột nào nằm ở SELECT mà không nằm trong hàm nhóm thì bắt buộc phải có mặt sau mệnh đề GROUP BY.</p>
           </div>
         </div>
       </div>
+
+      <!-- Mục 4: Stored Procedure, Transaction & Khung nhìn -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">Chương 8</span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-2 flex items-center gap-2">
+            <i class="fa-solid fa-code text-purple-600"></i> 4. Khung Nhìn (View) & Thủ Tục Lưu Trữ (Stored Procedure) Chuyên Sâu
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Nguyên tắc biên dịch, cơ chế an toàn dữ liệu và tối ưu hóa truy vấn.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+          <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-1.5"><i class="fa-solid fa-table text-purple-600"></i> Khung Nhìn (VIEW) Chuyên Sâu:</h4>
+            <p class="text-slate-700">View là một bảng logic được định nghĩa bởi câu truy vấn SELECT. Bản thân View không lưu trữ dữ liệu (trừ Indexed View).</p>
+            <ul class="space-y-1.5 text-slate-600 text-xs">
+              <li>• <b>WITH SCHEMABINDING:</b> Khóa cấu trúc của các bảng gốc tham gia vào View, ngăn cấm ai đó dùng lệnh <code class="font-mono text-purple-800">ALTER</code> hoặc <code class="font-mono text-purple-800">DROP</code> bảng gốc làm hỏng View.</li>
+              <li>• <b>WITH CHECK OPTION:</b> Đảm bảo mọi thao tác INSERT hoặc UPDATE thông qua View bắt buộc phải thỏa mãn mệnh đề WHERE của View đó.</li>
+              <li>• <b>Giới hạn DML trên View:</b> Chỉ có thể INSERT/UPDATE vào <b>duy nhất 1 bảng gốc</b> sau mệnh đề FROM tại một thời điểm; View chứa GROUP BY, DISTINCT, hàm tổng hợp không được phép sửa dữ liệu trực tiếp.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-1.5"><i class="fa-solid fa-terminal text-blue-600"></i> Stored Procedure & Recompilation:</h4>
+            <p class="text-slate-700">Stored Procedure được biên dịch và sinh ra sơ đồ thực thi (<b class="text-slate-900">Execution Plan</b>) lưu trong vùng đệm bộ nhớ đệm (Procedure Cache).</p>
+            <ul class="space-y-1.5 text-slate-600 text-xs">
+              <li>• <b>Biến đầu vào & đầu ra (OUTPUT):</b> Cho phép trả về kết quả số lượng, trạng thái về ứng dụng mà không cần SELECT toàn bộ bảng.</li>
+              <li>• <b>Tối ưu bảo mật:</b> Người dùng chỉ cần cấp quyền <code class="font-mono text-blue-800">GRANT EXECUTE ON sp_Name</code> mà không cần cấp quyền SELECT hay UPDATE trực tiếp trên bảng.</li>
+              <li>• <b>Tái biên dịch (Recompile):</b> Dùng <code class="font-mono text-blue-800">sp_recompile 'TenBang'</code> hoặc <code class="font-mono text-blue-800">WITH RECOMPILE</code> khi dữ liệu trong bảng biến động lớn làm sai lệch chỉ mục.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mục 5: Chiến lược Phục Hồi Thảm Họa (Disaster Recovery) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+        <div class="border-b border-slate-200 pb-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">Chương 9</span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-2 flex items-center gap-2">
+            <i class="fa-solid fa-shield-virus text-amber-600"></i> 5. Chiến Lược Backup / Restore & Phục Hồi Điểm Thời Gian (Point-in-Time)
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Phân biệt toán học và thứ tự khôi phục dữ liệu không để mất giao dịch.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+          <div class="p-4 bg-amber-50/50 rounded-xl border border-amber-200 space-y-1.5">
+            <h4 class="font-bold text-amber-900 text-sm">Full Database Backup</h4>
+            <p class="text-slate-700">Chép lại toàn bộ dữ liệu, schema, cấu trúc chỉ mục và một phần log hoạt động để đưa CSDL về trạng thái nhất quán. Là nền tảng bắt buộc trước mọi loại backup khác.</p>
+          </div>
+          <div class="p-4 bg-blue-50/50 rounded-xl border border-blue-200 space-y-1.5">
+            <h4 class="font-bold text-blue-900 text-sm">Differential Backup</h4>
+            <p class="text-slate-700">Chỉ sao lưu các Data Page bị biến đổi kể từ lần Full Backup gần nhất (dựa trên bitmap kiểm tra thay đổi). Giảm thời gian sao lưu và tiết kiệm dung lượng đĩa đáng kể.</p>
+          </div>
+          <div class="p-4 bg-emerald-50/50 rounded-xl border border-emerald-200 space-y-1.5">
+            <h4 class="font-bold text-emerald-900 text-sm">Transaction Log Backup</h4>
+            <p class="text-slate-700">Chỉ sao lưu các bản ghi log phát sinh kể từ lần Log Backup gần nhất và cắt tỉa (truncate) phần log không hoạt động. Cho phép phục hồi tới từng giây (Point-in-Time).</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 text-slate-200 p-4 rounded-xl text-xs sm:text-sm space-y-2 font-mono">
+          <div class="text-amber-400 font-bold">Thứ tự chuẩn khi thực hiện Phục Hồi Thảm Họa (Disaster Recovery Pipeline):</div>
+          <div class="space-y-1 text-slate-300">
+            <div>1. RESTORE DATABASE CSDL FROM Full_Backup WITH NORECOVERY; -- Chưa mở CSDL</div>
+            <div>2. RESTORE DATABASE CSDL FROM Diff_Backup WITH NORECOVERY;  -- Áp bản Diff mới nhất</div>
+            <div>3. RESTORE LOG CSDL FROM Log_Backup_1 WITH NORECOVERY;     -- Áp các log tuần tự</div>
+            <div>4. RESTORE LOG CSDL FROM Log_Backup_N WITH RECOVERY;       -- Mở CSDL cho người dùng</div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
-    <!-- ==================== TAB 2: BÀI TẬP MẪU & PHÂN TÍCH ĐA TẦNG ==================== -->
+    <!-- ==================== TAB 2: BÀI MẪU & PHÂN TÍCH ĐA TẦNG ==================== -->
     <section id="tab-sample" class="tab-content space-y-8">
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="bg-slate-800 text-white px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-blue-900/50">
           <div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Bài Mẫu Hướng Dẫn Từng Dòng Lệnh</span>
-            <h2 class="text-lg font-bold">Mô Hình: Quản Lý Bán Hàng & Kho Hàng (LOAIHANG - SANPHAM)</h2>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-md border border-amber-400/20">Case Study Mẫu Doanh Nghiệp</span>
+            <h2 class="text-lg sm:text-xl font-bold mt-1.5">Mô Hình: Quản Lý Bán Hàng & Phân Loại Kho Hàng Đa Cấp</h2>
           </div>
-          <button onclick="copyCode('code-sample-all')" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-medium transition">
+          <button onclick="copyCode('code-sample-full')" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-xs font-semibold shadow transition">
             <i class="fa-regular fa-copy"></i> Sao chép toàn bộ Script Mẫu
           </button>
         </div>
 
-        <div class="p-6 space-y-6">
-          <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 text-xs sm:text-sm text-blue-900">
-            <b>Mục tiêu bài mẫu:</b> Hướng dẫn học viên hoàn chỉnh luồng nghiệp vụ: Khởi tạo Database sạch &rarr; Định nghĩa cấu trúc bảng cha - con có đầy đủ 5 loại ràng buộc toàn vẹn &rarr; Nạp dữ liệu chuẩn &rarr; Viết truy vấn JOIN, GROUP BY, HAVING, SUBQUERY &rarr; Tạo View bảo mật &rarr; Viết Stored Procedure kiểm tra ràng buộc logic trước khi sửa đổi.
+        <div class="p-6 space-y-6 text-xs sm:text-sm">
+          
+          <!-- Phân tích sơ đồ quan hệ -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-diagram-project text-blue-600"></i> Lược đồ quan hệ và quy tắc nghiệp vụ (Business Rules):
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-700">
+              <div class="p-3 bg-white rounded-lg border border-slate-200">
+                <b class="text-indigo-900 font-mono">LOAIHANG</b> (<u>MaLoai</u> char(4), TenLoai nvarchar(50))
+                <p class="text-xs text-slate-500 mt-1">Là bảng cha. Khóa chính MaLoai định danh ngành hàng. Không được rỗng.</p>
+              </div>
+              <div class="p-3 bg-white rounded-lg border border-slate-200">
+                <b class="text-indigo-900 font-mono">SANPHAM</b> (<u>MaSP</u> int IDENTITY, TenSP nvarchar(100), DonGia numeric, SoLuongTon int, MaLoai char(4))
+                <p class="text-xs text-slate-500 mt-1">Là bảng con. MaSP tự động tăng, DonGia > 0, SoLuongTon >= 0 ngầm định là 0, MaLoai tham chiếu LOAIHANG.</p>
+              </div>
+            </div>
           </div>
 
-          <div class="relative bg-slate-900 rounded-lg p-4 overflow-x-auto text-xs text-slate-100 font-mono leading-relaxed">
-            <pre><code id="code-sample-all">-- ============================================================
--- PHẦN 1: TẠO CƠ SỞ DỮ LIỆU SẠCH
--- ============================================================
+          <!-- Kịch bản code phân tích -->
+          <div class="relative bg-slate-950 rounded-xl p-5 overflow-x-auto text-xs text-slate-200 font-mono leading-relaxed code-scroll border border-slate-800 shadow-inner">
+            <pre><code id="code-sample-full">-- =========================================================================
+-- BƯỚC 1: KHỞI TẠO CƠ SỞ DỮ LIỆU ĐÚNG CHUẨN KỸ THUẬT
+-- Chú ý: Luôn chuyển ngữ cảnh sang CSDL 'master' trước khi tạo CSDL mới
+-- =========================================================================
 USE master;
+GO
+
+-- Kiểm tra và dọn dẹp nếu CSDL đã tồn tại
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'QL_BANHANG_SAMPLE')
+BEGIN
+    ALTER DATABASE QL_BANHANG_SAMPLE SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE QL_BANHANG_SAMPLE;
+END;
 GO
 
 CREATE DATABASE QL_BANHANG_SAMPLE
 ON PRIMARY (
     NAME = 'QL_BANHANG_Data',
     FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL\Data\QL_BANHANG_Data.mdf',
-    SIZE = 10MB,
-    MAXSIZE = 50MB,
-    FILEGROWTH = 5MB
+    SIZE = 10MB,          -- Kích thước ban đầu tối thiểu
+    MAXSIZE = 100MB,      -- Giới hạn trần để tránh đầy ổ đĩa
+    FILEGROWTH = 5MB      -- Tăng trưởng theo block 5MB thay vì tỷ lệ % để tránh phân mảnh đĩa
 )
 LOG ON (
     NAME = 'QL_BANHANG_Log',
     FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL\Data\QL_BANHANG_Log.ldf',
     SIZE = 5MB,
-    MAXSIZE = UNLIMITED,
-    FILEGROWTH = 1MB
+    MAXSIZE = 50MB,
+    FILEGROWTH = 2MB
 );
 GO
 
+-- Chuyển ngữ cảnh vào CSDL vừa tạo để làm việc
 USE QL_BANHANG_SAMPLE;
 GO
 
--- ============================================================
--- PHẦN 2: TẠO BẢNG CHA & BẢNG CON VỚI ĐỦ CÁC RÀNG BUỘC
--- ============================================================
+-- =========================================================================
+-- BƯỚC 2: TẠO BẢNG CHA & BẢNG CON VỚI ĐỦ 5 LOẠI RÀNG BUỘC TOÀN VẸN
+-- Nguyên tắc vàng: Bảng cha (được tham chiếu) phải tạo trước bảng con!
+-- =========================================================================
 
--- Bảng cha: LOAIHANG (phải tạo trước vì bảng SANPHAM sẽ tham chiếu tới)
+-- Bảng cha: LOAIHANG
 CREATE TABLE LOAIHANG (
     MaLoai char(4) NOT NULL,
     TenLoai nvarchar(50) NOT NULL,
-    -- Ràng buộc Khóa chính (Primary Key)
-    CONSTRAINT PK_LOAIHANG PRIMARY KEY (MaLoai)
+    -- Ràng buộc Khóa chính: Đảm bảo tính duy nhất thực thể
+    CONSTRAINT PK_LOAIHANG PRIMARY KEY CLUSTERED (MaLoai)
 );
 GO
 
 -- Bảng con: SANPHAM
 CREATE TABLE SANPHAM (
-    -- IDENTITY(1,1): Tự động sinh mã từ 1, tăng 1 mỗi khi thêm dòng mới
+    -- Thuộc tính IDENTITY: Tự sinh mã từ 1, tăng 1 mỗi dòng, cấm người dùng tự nhập
     MaSP int IDENTITY(1,1) NOT NULL,
     TenSP nvarchar(100) NOT NULL,
     DonGia numeric(10,2) NOT NULL,
     SoLuongTon int NOT NULL,
     MaLoai char(4) NULL,
     
-    -- Định nghĩa các ràng buộc toàn vẹn có đặt tên chuẩn:
-    CONSTRAINT PK_SANPHAM PRIMARY KEY (MaSP),                                    -- Khóa chính
-    CONSTRAINT CK_SP_DonGia CHECK (DonGia > 0),                                 -- Kiểm tra đơn giá phải > 0
-    CONSTRAINT DF_SP_SoLuongTon DEFAULT 0 FOR SoLuongTon,                       -- Ngầm định tồn kho là 0 nếu để trống
-    CONSTRAINT FK_SANPHAM_LOAIHANG FOREIGN KEY (MaLoai) REFERENCES LOAIHANG(MaLoai) -- Khóa ngoại liên kết
+    -- Định nghĩa các ràng buộc toàn vẹn có định danh tường minh:
+    CONSTRAINT PK_SANPHAM PRIMARY KEY CLUSTERED (MaSP),
+    CONSTRAINT CK_SP_DonGia CHECK (DonGia > 0),                          -- Miền giá trị: Đơn giá > 0
+    CONSTRAINT CK_SP_SoLuongTon CHECK (SoLuongTon >= 0),                 -- Miền giá trị: Tồn kho >= 0
+    CONSTRAINT DF_SP_SoLuongTon DEFAULT 0 FOR SoLuongTon,                -- Mặc định: Gán 0 khi INSERT không nhập
+    CONSTRAINT FK_SANPHAM_LOAIHANG FOREIGN KEY (MaLoai)                  -- Tham chiếu: Khóa ngoại trỏ về bảng cha
+        REFERENCES LOAIHANG(MaLoai)
+        ON UPDATE CASCADE                                                -- Cập nhật dây chuyền nếu đổi mã loại
+        ON DELETE SET NULL                                               -- Nếu xóa loại hàng thì sản phẩm về NULL
 );
 GO
 
--- ============================================================
--- PHẦN 3: NẠP DỮ LIỆU KIỂM THỬ (Nạp bảng cha trước, con sau)
--- ============================================================
+-- =========================================================================
+-- BƯỚC 3: NẠP DỮ LIỆU KIỂM THỬ (TEST DATA)
+-- Nạp dữ liệu bảng cha trước rồi mới nạp dữ liệu bảng con
+-- =========================================================================
 INSERT INTO LOAIHANG (MaLoai, TenLoai) VALUES 
 ('L001', N'Linh Kiện Máy Tính'),
 ('L002', N'Thiết Bị Mạng'),
-('L003', N'Phụ Kiện Văn Phòng');
+('L003', N'Phụ Kiện Văn Phòng'),
+('L004', N'Thiết Bị Âm Thanh'); -- Loại chưa có sản phẩm nào
 GO
 
 INSERT INTO SANPHAM (TenSP, DonGia, SoLuongTon, MaLoai) VALUES 
 (N'Chuột không dây Logitech M331', 320.00, 25, 'L003'),
 (N'Bàn phím cơ Akko 3087', 950.00, 10, 'L003'),
 (N'CPU Intel Core i5 12400F', 3600.00, 8, 'L001'),
-(N'RAM DDR4 16GB Kingston', 920.00, 30, 'L001'),
-(N'Bộ phát WiFi Router TP-Link', 450.00, 15, 'L002'),
-(N'Dây cáp mạng CAT6 5m', 45.00, 100, 'L002');
+(N'RAM DDR4 16GB Kingston Fury', 920.00, 30, 'L001'),
+(N'Bộ phát WiFi Router TP-Link Archer', 450.00, 15, 'L002'),
+(N'Dây cáp mạng CAT6 UTP 5m', 45.00, 100, 'L002'),
+(N'Tai nghe Gaming Kingston HyperX', 1250.00, 0, 'L001');
 GO
 
--- ============================================================
--- PHẦN 4: TRUY VẤN NÂNG CAO (JOIN, GROUP BY, HAVING, SUBQUERY)
--- ============================================================
+-- =========================================================================
+-- BƯỚC 4: KỸ THUẬT TRUY VẤN DỮ LIỆU T-SQL CHUYÊN SÂU
+-- =========================================================================
 
--- [Truy vấn 1]: Nối bảng INNER JOIN có điều kiện lọc WHERE & ORDER BY
+-- [Truy vấn 1]: INNER JOIN với bộ lọc dòng WHERE và bí danh AS
+-- Lấy danh sách sản phẩm có đơn giá >= 400 và sắp xếp giảm dần theo giá
 SELECT 
     SP.MaSP,
     SP.TenSP,
     SP.DonGia,
+    SP.SoLuongTon,
     LH.TenLoai
-FROM SANPHAM SP
-INNER JOIN LOAIHANG LH ON SP.MaLoai = LH.MaLoai -- Nối theo cặp khóa
-WHERE SP.DonGia >= 400.00                       -- Lọc đơn giá >= 400
-ORDER BY SP.DonGia DESC;                         -- Sắp xếp giảm dần
+FROM SANPHAM AS SP
+INNER JOIN LOAIHANG AS LH ON SP.MaLoai = LH.MaLoai
+WHERE SP.DonGia >= 400.00
+ORDER BY SP.DonGia DESC;
 GO
 
--- [Truy vấn 2]: Gom nhóm GROUP BY kèm HAVING
--- Đếm số mặt hàng, tính đơn giá TB và tổng trị giá tồn kho của từng loại
+-- [Truy vấn 2]: LEFT OUTER JOIN để không bỏ sót ngành hàng chưa có sản phẩm
+SELECT 
+    LH.MaLoai,
+    LH.TenLoai,
+    COUNT(SP.MaSP) AS SoLuongMatHang,
+    ISNULL(SUM(SP.SoLuongTon), 0) AS TongTonKho,
+    ISNULL(AVG(SP.DonGia), 0) AS DonGiaTrungBinh
+FROM LOAIHANG AS LH
+LEFT JOIN SANPHAM AS SP ON LH.MaLoai = SP.MaLoai
+GROUP BY LH.MaLoai, LH.TenLoai
+HAVING COUNT(SP.MaSP) >= 0; -- Hiển thị cả loại có 0 sản phẩm
+GO
+
+-- [Truy vấn 3]: Gom nhóm GROUP BY kèm HAVING với nhiều điều kiện hàm nhóm
+-- Chỉ hiển thị những loại hàng có từ 2 sản phẩm trở lên VÀ đơn giá trung bình > 200
 SELECT 
     LH.TenLoai,
-    COUNT(SP.MaSP) AS TongSoMatHang,
-    AVG(SP.DonGia) AS DonGiaTrungBinh,
-    SUM(SP.DonGia * SP.SoLuongTon) AS TongGiaTriTonKho
-FROM LOAIHANG LH
-INNER JOIN SANPHAM SP ON LH.MaLoai = SP.MaLoai
+    COUNT(SP.MaSP) AS TongSoSP,
+    MAX(SP.DonGia) AS GiaCaoNhat,
+    AVG(SP.DonGia) AS GiaTrungBinh
+FROM LOAIHANG AS LH
+INNER JOIN SANPHAM AS SP ON LH.MaLoai = SP.MaLoai
 GROUP BY LH.TenLoai
-HAVING COUNT(SP.MaSP) >= 2;                     -- Chỉ lấy loại nào có từ 2 mặt hàng trở lên
+HAVING COUNT(SP.MaSP) >= 2 AND AVG(SP.DonGia) > 200.00;
 GO
 
--- [Truy vấn 3]: Truy vấn con lồng nhau (Subquery)
+-- [Truy vấn 4]: Subquery vô hướng (Scalar Subquery)
 -- Tìm các sản phẩm có đơn giá cao hơn mức giá trung bình của toàn bộ cửa hàng
 SELECT 
     MaSP,
@@ -339,68 +562,98 @@ WHERE DonGia > (
 );
 GO
 
--- ============================================================
--- PHẦN 5: TẠO KHUNG NHÌN (VIEW) BẢO MẬT DỮ LIỆU
--- ============================================================
-CREATE VIEW vw_BaoCaoKhoHang (MaLoai, TenLoai, SoLuongSanPham, TongTonKho)
+-- [Truy vấn 5]: Subquery với toán tử tập hợp '> ALL'
+-- Tìm sản phẩm có giá cao hơn TẤT CẢ các sản phẩm thuộc loại 'L003' (Phụ kiện)
+SELECT 
+    MaSP,
+    TenSP,
+    DonGia,
+    MaLoai
+FROM SANPHAM
+WHERE DonGia > ALL (
+    SELECT DonGia 
+    FROM SANPHAM 
+    WHERE MaLoai = 'L003'
+);
+GO
+
+-- =========================================================================
+-- BƯỚC 5: XÂY DỰNG KHUNG NHÌN (VIEW) BẢO MẬT DỮ LIỆU
+-- =========================================================================
+CREATE VIEW vw_BaoCaoKhoHang (MaLoai, TenLoai, SoLuongMatHang, TongGiaTriKho)
 AS
 SELECT 
     LH.MaLoai,
     LH.TenLoai,
     COUNT(SP.MaSP),
-    SUM(SP.SoLuongTon)
+    ISNULL(SUM(SP.DonGia * SP.SoLuongTon), 0)
 FROM LOAIHANG LH
 LEFT JOIN SANPHAM SP ON LH.MaLoai = SP.MaLoai
 GROUP BY LH.MaLoai, LH.TenLoai;
 GO
 
--- Kiểm tra truy vấn từ View
-SELECT * FROM vw_BaoCaoKhoHang;
+-- Truy vấn báo cáo thông qua View
+SELECT * FROM vw_BaoCaoKhoHang WHERE TongGiaTriKho > 0;
 GO
 
--- ============================================================
--- PHẦN 6: STORED PROCEDURE CẬP NHẬT GIÁ CÓ BẪY LỖI
--- ============================================================
-CREATE PROCEDURE sp_CapNhatGiaBan
+-- =========================================================================
+-- BƯỚC 6: XÂY DỰNG STORED PROCEDURE CẬP NHẬT DỮ LIỆU CHUẨN DOANH NGHIỆP
+-- Yêu cầu: Kiểm tra đầu vào, kiểm tra khóa ngoại, bẫy lỗi và trả thông báo
+-- =========================================================================
+CREATE PROCEDURE sp_CapNhatGiaVaKho
     @p_MaSP int,
-    @p_DonGiaMoi numeric(10,2)
+    @p_DonGiaMoi numeric(10,2),
+    @p_SoLuongNhap int
 AS
 BEGIN
-    SET NOCOUNT ON;
+    SET NOCOUNT ON; -- Không trả về số dòng ảnh hưởng để tiết kiệm băng thông
 
-    -- Kiểm tra 1: Xác thực đơn giá mới nhập
+    -- Kiểm tra 1: Xác thực đơn giá
     IF (@p_DonGiaMoi <= 0)
     BEGIN
-        PRINT N'Thao tác thất bại: Đơn giá mới phải lớn hơn 0!';
+        PRINT N'Thất bại: Đơn giá mới phải là số dương (> 0)!';
         RETURN;
     END;
 
-    -- Kiểm tra 2: Kiểm tra sự tồn tại của sản phẩm
+    -- Kiểm tra 2: Xác thực số lượng nhập thêm
+    IF (@p_SoLuongNhap < 0)
+    BEGIN
+        PRINT N'Thất bại: Số lượng nhập kho không được là số âm!';
+        RETURN;
+    END;
+
+    -- Kiểm tra 3: Xác thực sự tồn tại của sản phẩm
     IF NOT EXISTS (SELECT 1 FROM SANPHAM WHERE MaSP = @p_MaSP)
     BEGIN
-        PRINT N'Thao tác thất bại: Sản phẩm mang mã số này không tồn tại!';
+        PRINT N'Thất bại: Mã sản phẩm không tồn tại trong hệ thống!';
         RETURN;
     END;
 
-    -- Cập nhật dữ liệu
+    -- Thực hiện cập nhật
     UPDATE SANPHAM
-    SET DonGia = @p_DonGiaMoi
+    SET DonGia = @p_DonGiaMoi,
+        SoLuongTon = SoLuongTon + @p_SoLuongNhap
     WHERE MaSP = @p_MaSP;
 
-    PRINT N'Xác nhận: Đã cập nhật đơn giá mới cho sản phẩm thành công!';
+    PRINT N'Thành công: Đã cập nhật đơn giá và cộng dồn số lượng tồn kho!';
 END;
 GO
 
--- Thử nghiệm gọi thủ tục cập nhật giá
-EXEC sp_CapNhatGiaBan @p_MaSP = 1, @p_DonGiaMoi = 350.00;
+-- Thử nghiệm các kịch bản kiểm thử:
+-- Test case 1: Giá âm (Sẽ bị chặn)
+EXEC sp_CapNhatGiaVaKho @p_MaSP = 1, @p_DonGiaMoi = -100, @p_SoLuongNhap = 5;
+
+-- Test case 2: Hợp lệ (Cập nhật sản phẩm 1 lên giá 350, nhập thêm 10 cái)
+EXEC sp_CapNhatGiaVaKho @p_MaSP = 1, @p_DonGiaMoi = 350.00, @p_SoLuongNhap = 10;
 GO
 
--- Kiểm tra lại sản phẩm vừa sửa
-SELECT MaSP, TenSP, DonGia FROM SANPHAM WHERE MaSP = 1;
+-- Kiểm tra lại bảng SANPHAM để thấy kết quả
+SELECT * FROM SANPHAM WHERE MaSP = 1;
 GO</code></pre>
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- ==================== TAB 3: 3 BÀI THỰC HÀNH TẠI LỚP ==================== -->
@@ -647,13 +900,13 @@ GO</code></pre>
     <!-- ==================== TAB 4: BÀI TẬP VỀ NHÀ ==================== -->
     <section id="tab-homework" class="tab-content space-y-8">
       
-      <div class="bg-gradient-to-r from-purple-900 to-indigo-900 text-white p-6 rounded-xl shadow-md">
+      <div class="bg-gradient-to-r from-purple-900 to-indigo-900 text-white p-6 rounded-2xl shadow-md border border-purple-800">
         <div class="flex items-start gap-4">
           <div class="p-3 bg-white/10 rounded-xl text-purple-300 text-2xl"><i class="fa-solid fa-graduation-cap"></i></div>
           <div>
             <h2 class="text-xl font-bold">Bài Tập Tự Luyện Về Nhà (Không Kèm Code Mẫu)</h2>
-            <p class="text-sm text-purple-200 mt-1">
-              Sinh viên tự đọc yêu cầu, phân tích lược đồ quan hệ và tự hoàn thiện câu lệnh T-SQL vào khung làm bài bên dưới. Sau khi hoàn thành, nhấn nút <b>"Tải File .SQL Nộp Bài"</b> để gửi cho giảng viên.
+            <p class="text-xs sm:text-sm text-purple-200 mt-1">
+              Sinh viên tự đọc yêu cầu, phân tích quan hệ và tự hoàn thiện script T-SQL vào khung soạn thảo. Nhấn <b>"Tải File .SQL Nộp Bài"</b> để nộp bài làm cho giảng viên.
             </p>
           </div>
         </div>
@@ -661,7 +914,7 @@ GO</code></pre>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Đề 1 -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
           <div class="space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
               <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs font-bold rounded-full uppercase">Đề Số 01</span>
@@ -695,7 +948,7 @@ GO</code></pre>
         </div>
 
         <!-- Đề 2 -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
           <div class="space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
               <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold rounded-full uppercase">Đề Số 02</span>
@@ -733,7 +986,7 @@ GO</code></pre>
       </div>
 
       <!-- Khu vực Scratchpad nộp bài -->
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b pb-4">
           <div>
             <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -753,10 +1006,10 @@ GO</code></pre>
 
         <div class="space-y-2">
           <div class="flex items-center justify-between text-xs text-slate-500">
-            <span>Tên sinh viên / MSSV: <input id="student-info" type="text" placeholder="Nhập Họ Tên - MSSV..." class="ml-2 px-2 py-1 border rounded text-xs text-slate-800 w-48 sm:w-64 focus:outline-none focus:border-purple-600"></span>
+            <span>Tên sinh viên / MSSV: <input id="student-info" type="text" placeholder="Nhập Họ Tên - MSSV..." class="ml-2 px-2.5 py-1 border rounded-lg text-xs text-slate-800 w-52 sm:w-72 focus:outline-none focus:ring-1 focus:ring-purple-600"></span>
             <span id="save-status" class="text-emerald-600 font-medium text-xs"><i class="fa-solid fa-check mr-1"></i>Đã tự động lưu</span>
           </div>
-          <textarea id="homework-editor" rows="14" class="w-full bg-slate-900 text-slate-100 font-mono text-xs sm:text-sm p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 custom-scrollbar leading-relaxed" placeholder="-- VIẾT BÀI TẬP VỀ NHÀ CỦA BẠN TẠI ĐÂY
+          <textarea id="homework-editor" rows="15" class="w-full bg-slate-950 text-slate-100 font-mono text-xs sm:text-sm p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 custom-scrollbar leading-relaxed" placeholder="-- VIẾT BÀI TẬP VỀ NHÀ CỦA BẠN TẠI ĐÂY
 -- Họ và tên: 
 -- Lớp: 
 -- Đề số: 
@@ -771,73 +1024,97 @@ GO
 
     </section>
 
-    <!-- ==================== TAB 5: CẨM NANG FIX LỖI ==================== -->
+    <!-- ==================== TAB 5: CẨM NANG FIX 10+ LỖI KINH ĐIỂN ==================== -->
     <section id="tab-errors" class="tab-content space-y-6">
       <div class="bg-rose-50 border-l-4 border-rose-600 p-4 rounded-r-lg shadow-sm">
         <h2 class="text-lg font-bold text-rose-900 flex items-center gap-2">
-          <i class="fa-solid fa-bug text-rose-600"></i> Top Các Lỗi Sinh Viên Thường Gặp Khi Thực Hành & Cách Xử Lý
+          <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> Cẩm Nang Chẩn Đoán & Sửa Nhanh 10+ Lỗi T-SQL Kinh Điển
         </h2>
         <p class="text-sm text-rose-800 mt-1">
-          Tổng hợp các thông báo lỗi kinh điển trong SQL Query Analyzer / SSMS và giải pháp khắc phục triệt để.
+          Tổng hợp chi tiết mã lỗi, thông điệp hệ thống và phương án xử lý dứt điểm khi thực hành trên SQL Query Analyzer / SSMS.
         </p>
       </div>
 
-      <div class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+        
         <!-- Error 1 -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-          <div class="flex items-start gap-3">
-            <span class="p-2 bg-rose-100 text-rose-700 rounded-lg text-lg"><i class="fa-solid fa-circle-xmark"></i></span>
-            <div class="space-y-2 flex-1">
-              <h3 class="font-bold text-slate-900 text-sm sm:text-base">1. Lỗi: "The INSERT statement conflicted with the FOREIGN KEY constraint..."</h3>
-              <p class="text-xs sm:text-sm text-slate-600"><b class="text-slate-800">Nguyên nhân:</b> Bạn đang cố chèn một bản ghi vào bảng con (ví dụ: <code class="font-mono text-rose-600">NHANVIEN</code>) với mã đơn vị không hề tồn tại trong bảng cha (<code class="font-mono text-rose-600">DONVI</code>), hoặc thứ tự INSERT dữ liệu bị ngược.</p>
-              <div class="bg-emerald-50 border-l-2 border-emerald-500 p-2.5 rounded text-xs text-emerald-800">
-                <b>Khắc phục:</b> Luôn tạo bảng cha trước, bảng con sau. Khi nạp dữ liệu, phải chèn đầy đủ danh sách mã vào bảng cha trước rồi mới chèn dữ liệu bảng con.
-              </div>
-            </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 space-y-2">
+          <div class="flex items-center gap-2 font-bold text-rose-700">
+            <span class="w-6 h-6 rounded bg-rose-100 flex items-center justify-center text-xs">1</span>
+            Lỗi Xung Đột Khóa Ngoại (Foreign Key Violation)
+          </div>
+          <p class="text-slate-600"><b>Msg 547:</b> <i>"The INSERT statement conflicted with the FOREIGN KEY constraint..."</i></p>
+          <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-700">
+            <b>Nguyên nhân:</b> Chèn mã đơn vị vào bảng con mà bảng cha chưa hề có mã này, hoặc thứ tự tạo bảng bị ngược.<br>
+            <b class="text-emerald-700">Cách sửa:</b> Luôn INSERT dữ liệu bảng cha trước; kiểm tra xem giá trị FK có tồn tại ở PK bảng cha chưa.
           </div>
         </div>
 
         <!-- Error 2 -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-          <div class="flex items-start gap-3">
-            <span class="p-2 bg-rose-100 text-rose-700 rounded-lg text-lg"><i class="fa-solid fa-circle-xmark"></i></span>
-            <div class="space-y-2 flex-1">
-              <h3 class="font-bold text-slate-900 text-sm sm:text-base">2. Lỗi: "...is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause"</h3>
-              <p class="text-xs sm:text-sm text-slate-600"><b class="text-slate-800">Nguyên nhân:</b> Trong mệnh đề SELECT bạn có liệt kê các cột đơn lẻ nhưng lại quên không đưa các cột này vào danh sách sau mệnh đề <code class="font-mono text-rose-600">GROUP BY</code>.</p>
-              <div class="bg-emerald-50 border-l-2 border-emerald-500 p-2.5 rounded text-xs text-emerald-800">
-                <b>Khắc phục:</b> Quy tắc bất di bất dịch: Bất kỳ cột nào nằm ở SELECT mà không có hàm nhóm bao bọc (như COUNT, SUM, AVG, MAX, MIN) thì bắt buộc phải xuất hiện sau GROUP BY.
-              </div>
-            </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 space-y-2">
+          <div class="flex items-center gap-2 font-bold text-rose-700">
+            <span class="w-6 h-6 rounded bg-rose-100 flex items-center justify-center text-xs">2</span>
+            Lỗi Thiếu Cột Trong Mệnh Đề GROUP BY
+          </div>
+          <p class="text-slate-600"><b>Msg 8120:</b> <i>"Column '...' is invalid in the select list because it is not contained in GROUP BY..."</i></p>
+          <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-700">
+            <b>Nguyên nhân:</b> SELECT một cột độc lập nhưng quên không đưa cột đó vào danh sách sau GROUP BY.<br>
+            <b class="text-emerald-700">Cách sửa:</b> Bất kỳ cột nào nằm ở SELECT mà không có hàm nhóm (SUM, AVG...) thì bắt buộc phải đưa vào sau GROUP BY.
           </div>
         </div>
 
         <!-- Error 3 -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-          <div class="flex items-start gap-3">
-            <span class="p-2 bg-rose-100 text-rose-700 rounded-lg text-lg"><i class="fa-solid fa-circle-xmark"></i></span>
-            <div class="space-y-2 flex-1">
-              <h3 class="font-bold text-slate-900 text-sm sm:text-base">3. Lỗi: "Cannot drop database '...' because it is currently in use"</h3>
-              <p class="text-xs sm:text-sm text-slate-600"><b class="text-slate-800">Nguyên nhân:</b> Bạn đang đứng ngay trong chính CSDL đó để gõ lệnh DROP DATABASE hoặc RESTORE DATABASE.</p>
-              <div class="bg-emerald-50 border-l-2 border-emerald-500 p-2.5 rounded text-xs text-emerald-800">
-                <b>Khắc phục:</b> Chuyển ngữ cảnh làm việc về cơ sở dữ liệu hệ thống trước bằng lệnh: <code class="font-mono font-bold text-emerald-900">USE master; GO</code> rồi mới thực thi lệnh xóa hoặc phục hồi.
-              </div>
-            </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 space-y-2">
+          <div class="flex items-center gap-2 font-bold text-rose-700">
+            <span class="w-6 h-6 rounded bg-rose-100 flex items-center justify-center text-xs">3</span>
+            Lỗi CSDL Đang Được Sử Dụng (Database in Use)
+          </div>
+          <p class="text-slate-600"><b>Msg 3702 / 3101:</b> <i>"Cannot drop/restore database '...' because it is currently in use."</i></p>
+          <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-700">
+            <b>Nguyên nhân:</b> Cửa sổ truy vấn hoặc ứng dụng khác đang kết nối mở vào CSDL bạn muốn DROP hoặc RESTORE.<br>
+            <b class="text-emerald-700">Cách sửa:</b> Chạy <code class="font-mono font-bold text-blue-800">USE master; GO</code> hoặc đặt <code class="font-mono text-blue-800">ALTER DATABASE CSDL SET SINGLE_USER WITH ROLLBACK IMMEDIATE;</code>
           </div>
         </div>
 
         <!-- Error 4 -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-          <div class="flex items-start gap-3">
-            <span class="p-2 bg-rose-100 text-rose-700 rounded-lg text-lg"><i class="fa-solid fa-circle-xmark"></i></span>
-            <div class="space-y-2 flex-1">
-              <h3 class="font-bold text-slate-900 text-sm sm:text-base">4. Lỗi: "Device error or device off-line" khi tạo Backup Device</h3>
-              <p class="text-xs sm:text-sm text-slate-600"><b class="text-slate-800">Nguyên nhân:</b> Đường dẫn thư mục vật lý (ví dụ: <code class="font-mono text-rose-600">C:\Backup</code>) chưa được tạo trên Windows, hoặc SQL Server không có quyền ghi file.</p>
-              <div class="bg-emerald-50 border-l-2 border-emerald-500 p-2.5 rounded text-xs text-emerald-800">
-                <b>Khắc phục:</b> Vào File Explorer của Windows, tạo sẵn thư mục <code class="font-mono font-bold">C:\Backup</code> (hoặc ổ D:\Backup) trước khi chạy thủ tục <code class="font-mono">sp_addumpdevice</code>.
-              </div>
-            </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 space-y-2">
+          <div class="flex items-center gap-2 font-bold text-rose-700">
+            <span class="w-6 h-6 rounded bg-rose-100 flex items-center justify-center text-xs">4</span>
+            Lỗi Thiết Bị Sao Lưu (Device Error / Off-line)
+          </div>
+          <p class="text-slate-600"><b>Msg 3201:</b> <i>"Cannot open backup device '...'. Operating system error 3(The system cannot find the path specified)."</i></p>
+          <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-700">
+            <b>Nguyên nhân:</b> Thư mục chứa file (ví dụ: <code class="font-mono">C:\Backup</code>) chưa được tạo thủ công ngoài Windows Explorer.<br>
+            <b class="text-emerald-700">Cách sửa:</b> Mở My Computer &rarr; Vào ổ C &rarr; Tạo thư mục có tên <code class="font-mono font-bold">Backup</code> trước khi chạy lệnh.
           </div>
         </div>
+
+        <!-- Error 5 -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 space-y-2">
+          <div class="flex items-center gap-2 font-bold text-rose-700">
+            <span class="w-6 h-6 rounded bg-rose-100 flex items-center justify-center text-xs">5</span>
+            Lỗi Chèn Dữ Liệu Vào Cột IDENTITY
+          </div>
+          <p class="text-slate-600"><b>Msg 544:</b> <i>"Cannot insert explicit value for identity column in table '...' when IDENTITY_INSERT is set to OFF."</i></p>
+          <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-700">
+            <b>Nguyên nhân:</b> Cố tình gõ giá trị cho cột tự tăng trong câu lệnh INSERT.<br>
+            <b class="text-emerald-700">Cách sửa:</b> Bỏ qua cột IDENTITY trong danh sách cột của INSERT để SQL Server tự động đánh số.
+          </div>
+        </div>
+
+        <!-- Error 6 -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 space-y-2">
+          <div class="flex items-center gap-2 font-bold text-rose-700">
+            <span class="w-6 h-6 rounded bg-rose-100 flex items-center justify-center text-xs">6</span>
+            Lỗi Subquery Trả Về Nhiều Hơn 1 Giá Trị
+          </div>
+          <p class="text-slate-600"><b>Msg 512:</b> <i>"Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, >..."</i></p>
+          <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-700">
+            <b>Nguyên nhân:</b> Dùng toán tử so sánh đơn (=, >) với câu truy vấn con trả về cả một danh sách nhiều hàng.<br>
+            <b class="text-emerald-700">Cách sửa:</b> Thay bằng toán tử tập hợp như <code class="font-mono text-blue-800">IN</code>, <code class="font-mono text-blue-800">> ALL</code>, hoặc <code class="font-mono text-blue-800">> ANY</code>.
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -846,20 +1123,20 @@ GO
       <div class="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h2 class="text-lg font-bold text-sky-900 flex items-center gap-2">
-            <i class="fa-solid fa-list-check text-sky-600"></i> Mini Quiz Trắc Nghiệm T-SQL (10 Câu Hỏi)
+            <i class="fa-solid fa-list-check text-sky-600"></i> Mini Quiz Trắc Nghiệm T-SQL Toàn Diện (10 Câu Hỏi)
           </h2>
-          <p class="text-sm text-sky-800 mt-1">Kiểm tra nhanh mức độ nắm vững kiến thức quản trị và lập trình cơ sở dữ liệu.</p>
+          <p class="text-sm text-sky-800 mt-1">Kiểm tra nhanh mức độ nắm vững bản chất kiến trúc và kỹ năng lập trình SQL Server.</p>
         </div>
         <button onclick="submitQuiz()" class="px-5 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg text-sm font-semibold shadow-sm transition flex items-center gap-2 self-start sm:self-auto">
           <i class="fa-solid fa-check-double"></i> Chấm Điểm Ngay
         </button>
       </div>
 
-      <div id="quiz-container" class="space-y-5">
+      <div id="quiz-container" class="space-y-4">
         <!-- Rendered by JS -->
       </div>
 
-      <div id="quiz-result-box" class="hidden p-6 bg-white rounded-xl shadow-md border border-slate-200 text-center space-y-3">
+      <div id="quiz-result-box" class="hidden p-6 bg-white rounded-2xl shadow-md border border-slate-200 text-center space-y-3">
         <h3 class="text-xl font-bold text-slate-800">Kết Quả Đánh Giá Của Bạn</h3>
         <p class="text-3xl font-extrabold text-blue-600" id="quiz-score">0 / 10</p>
         <p class="text-sm text-slate-600" id="quiz-feedback"></p>
@@ -872,16 +1149,16 @@ GO
   </main>
 
   <!-- Footer -->
-  <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-center text-xs mt-auto">
+  <footer class="bg-slate-950 text-slate-400 py-6 border-t border-slate-800 text-center text-xs mt-auto">
     <div class="max-w-7xl mx-auto px-4">
       <p class="font-medium text-slate-300">Tài liệu Giảng dạy và Học tập Môn Quản trị Hệ thống Cơ sở dữ liệu</p>
-      <p class="mt-1">Biên soạn theo khung đào tạo hệ Trung cấp - Khoa Công Nghệ Thông Tin</p>
+      <p class="mt-1">Biên soạn chi tiết theo chương trình đào tạo - Khoa Công Nghệ Thông Tin</p>
       <p class="mt-2 text-slate-500">&copy; 2026 Cần Thơ, Việt Nam. Sẵn sàng lưu trữ và chạy trên GitHub Pages.</p>
     </div>
   </footer>
 
   <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+  <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-2.5 rounded-lg shadow-xl text-xs flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50 border border-slate-700">
     <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
     <span id="toast-msg">Nội dung thông báo</span>
   </div>
@@ -931,16 +1208,16 @@ GO
     const studentInfo = document.getElementById('student-info');
     const saveStatus = document.getElementById('save-status');
 
-    if (localStorage.getItem('tsql_homework')) {
-      editor.value = localStorage.getItem('tsql_homework');
+    if (localStorage.getItem('tsql_homework_pro')) {
+      editor.value = localStorage.getItem('tsql_homework_pro');
     }
-    if (localStorage.getItem('tsql_student')) {
-      studentInfo.value = localStorage.getItem('tsql_student');
+    if (localStorage.getItem('tsql_student_pro')) {
+      studentInfo.value = localStorage.getItem('tsql_student_pro');
     }
 
     function triggerAutoSave() {
-      localStorage.setItem('tsql_homework', editor.value);
-      localStorage.setItem('tsql_student', studentInfo.value);
+      localStorage.setItem('tsql_homework_pro', editor.value);
+      localStorage.setItem('tsql_student_pro', studentInfo.value);
       saveStatus.innerHTML = '<i class="fa-solid fa-check mr-1"></i>Đã tự động lưu';
     }
 
@@ -954,7 +1231,7 @@ GO
     function clearScratchpad() {
       if (confirm('Bạn có chắc chắn muốn xóa toàn bộ nội dung bài làm trên khung soạn thảo?')) {
         editor.value = '';
-        localStorage.removeItem('tsql_homework');
+        localStorage.removeItem('tsql_homework_pro');
         showToast('Đã xóa trắng khung soạn thảo.');
       }
     }
@@ -979,53 +1256,53 @@ GO
     // 10 Quiz Questions
     const quizData = [
       {
-        q: "1. Trong câu lệnh tạo CSDL (CREATE DATABASE), tùy chọn nào sau đây quy định mức tăng trưởng kích thước của tập tin dữ liệu?",
-        options: ["SIZE", "MAXSIZE", "FILEGROWTH", "UNLIMITED"],
+        q: "1. Trong kiến trúc SQL Server, đơn vị vào/ra (I/O block) nhỏ nhất để đọc/ghi đĩa cứng là gì?",
+        options: ["Data Row", "Data Page (8KB)", "Uniform Extent (64KB)", "File Group"],
+        ans: 1
+      },
+      {
+        q: "2. Tại sao cơ chế Write-Ahead Logging (WAL) bắt buộc phải ghi log (.ldf) trước khi ghi dữ liệu (.mdf)?",
+        options: ["Để tiết kiệm bộ nhớ RAM", "Để đảm bảo khả năng Roll Forward hoặc Roll Back nếu máy sập nguồn", "Để file .mdf không bị phân mảnh", "Để tự động nén kích thước bảng"],
+        ans: 1
+      },
+      {
+        q: "3. Điểm khác biệt mấu chốt giữa ràng buộc PRIMARY KEY và ràng buộc UNIQUE là gì?",
+        options: ["PRIMARY KEY tự động tăng còn UNIQUE thì không", "Bảng chỉ có 1 PRIMARY KEY và không nhận NULL; UNIQUE có thể có nhiều và cho phép 1 giá trị NULL", "UNIQUE chỉ áp dụng cho chuỗi ký tự", "PRIMARY KEY không tạo Index"],
+        ans: 1
+      },
+      {
+        q: "4. Điều kiện nào sau đây KHÔNG ĐƯỢC PHÉP xuất hiện trực tiếp trong mệnh đề WHERE?",
+        options: ["So sánh ngày tháng (NgaySinh > '2000-01-01')", "Hàm nhóm tổng hợp (ví dụ: WHERE AVG(Luong) > 500)", "Phép so sánh chuỗi (LIKE 'Nguyễn%')", "So sánh với tập hợp (IN (1, 2, 3))"],
+        ans: 1
+      },
+      {
+        q: "5. Thứ tự thực thi logic thực tế bên trong SQL Engine của truy vấn SELECT là gì?",
+        options: ["SELECT &rarr; FROM &rarr; WHERE &rarr; GROUP BY &rarr; HAVING", "FROM &rarr; WHERE &rarr; GROUP BY &rarr; HAVING &rarr; SELECT &rarr; ORDER BY", "FROM &rarr; SELECT &rarr; WHERE &rarr; ORDER BY", "WHERE &rarr; FROM &rarr; GROUP BY &rarr; SELECT"],
+        ans: 1
+      },
+      {
+        q: "6. Tùy chọn WITH SCHEMABINDING khi tạo Khung nhìn (View) mang lại lợi ích gì?",
+        options: ["Cho phép nén bảng View", "Khóa các bảng gốc không cho sửa cấu trúc hoặc DROP làm hỏng View", "Cho phép sửa dữ liệu trên nhiều bảng đồng thời", "Tự động phân trang View"],
+        ans: 1
+      },
+      {
+        q: "7. Hành động tham chiếu 'ON DELETE CASCADE' trong khóa ngoại có ý nghĩa gì?",
+        options: ["Báo lỗi khi xóa bản ghi cha", "Gán giá trị khóa ngoại ở bảng con thành NULL", "Tự động xóa tất cả các bản ghi con liên quan khi bản ghi cha bị xóa", "Không cho phép xóa bảng con"],
         ans: 2
       },
       {
-        q: "2. Ràng buộc toàn vẹn nào sau đây tự động yêu cầu giá trị cột phải duy nhất VÀ không được phép rỗng (NOT NULL)?",
-        options: ["UNIQUE", "PRIMARY KEY", "CHECK", "DEFAULT"],
+        q: "8. Khi thực hiện sao lưu CSDL với tùy chọn 'WITH INIT', hệ thống sẽ thực hiện hành động nào?",
+        options: ["Ghi nối tiếp bản sao lưu mới vào cuối file backup", "Ghi đè hoàn toàn lên tập hợp sao lưu cũ trên thiết bị", "Chỉ sao lưu những bản ghi mới", "Tự động khôi phục ngay sau khi backup"],
         ans: 1
       },
       {
-        q: "3. Thuộc tính nào giúp cột tự động sinh số thứ tự tăng dần theo chu kỳ (ví dụ 1, 2, 3...)?",
-        options: ["AUTO_INCREMENT", "IDENTITY", "SEQUENCE", "UNIQUEIDENTIFIER"],
-        ans: 1
-      },
-      {
-        q: "4. Mệnh đề nào sau đây được dùng để lọc điều kiện TRÊN CÁC HÀM TỔNG HỢP (như SUM, AVG, COUNT) sau khi gom nhóm?",
-        options: ["WHERE", "ORDER BY", "HAVING", "GROUP BY"],
+        q: "9. Toán tử so sánh nào trả về TRUE nếu giá trị kiểm tra lớn hơn TẤT CẢ các phần tử trả về từ Subquery?",
+        options: ["> ANY", "> SOME", "> ALL", "EXISTS"],
         ans: 2
       },
       {
-        q: "5. Để thêm một cột mới vào bảng đã tồn tại trong SQL Server, ta dùng cú pháp nào?",
-        options: ["ALTER TABLE <Tên_bảng> ADD <Tên_cột> <Kiểu>;", "UPDATE TABLE <Tên_bảng> ADD COLUMN <Tên_cột>;", "MODIFY TABLE <Tên_bảng> INSERT <Tên_cột>;", "ALTER TABLE <Tên_bảng> ALTER <Tên_cột>;"],
-        ans: 0
-      },
-      {
-        q: "6. Khung nhìn (VIEW) trong SQL Server là gì?",
-        options: ["Một bảng vật lý lưu trên đĩa cứng", "Một bảng ảo logic định nghĩa thông qua câu lệnh SELECT", "Một bản sao lưu dự phòng của cơ sở dữ liệu", "Một thủ tục hệ thống của SQL Server"],
-        ans: 1
-      },
-      {
-        q: "7. Để tạo một thiết bị sao lưu logic (Backup Device) trong T-SQL, ta sử dụng thủ tục hệ thống nào?",
-        options: ["sp_helpdb", "sp_addumpdevice", "sp_backupdevice", "sp_configure"],
-        ans: 1
-      },
-      {
-        q: "8. Tham số WITH INIT trong câu lệnh BACKUP DATABASE có ý nghĩa gì?",
-        options: ["Nối tiếp bản sao lưu mới vào file cũ", "Ghi đè lên các bản sao lưu đã tồn tại trước đó", "Chỉ sao lưu phần thay đổi (Differential)", "Tự động khôi phục dữ liệu ngay sau khi sao lưu"],
-        ans: 1
-      },
-      {
-        q: "9. Toán tử so sánh nào trả về TRUE nếu giá trị lớn hơn TẤT CẢ các giá trị trả về của câu truy vấn con?",
-        options: ["> ANY", "> SOME", "> ALL", "IN"],
-        ans: 2
-      },
-      {
-        q: "10. Lợi ích quan trọng nhất của Stored Procedure so với các câu lệnh T-SQL rời rạc là gì?",
-        options: ["Tự động sửa lỗi cú pháp", "Được biên dịch trước giúp tối ưu tốc độ thực thi và nâng cao tính bảo mật", "Không cần quyền quản trị viên khi tạo", "Thay thế hoàn toàn cấu trúc bảng"],
+        q: "10. Để tránh gặp lỗi 'Database is currently in use' khi thực hiện RESTORE DATABASE, việc đầu tiên cần làm là gì?",
+        options: ["Tắt dịch vụ SQL Server", "Chuyển ngữ cảnh làm việc sang CSDL hệ thống: USE master; GO", "Xóa bảng dữ liệu trong CSDL trước", "Khởi động lại máy tính"],
         ans: 1
       }
     ];
@@ -1089,13 +1366,13 @@ GO
       scoreEl.innerText = `${score} / ${quizData.length}`;
 
       if (score === 10) {
-        feedbackEl.innerText = "Xuất sắc! Bạn đã nắm vững 100% kiến thức lý thuyết và thực hành T-SQL.";
+        feedbackEl.innerText = "Xuất sắc! Bạn đã nắm vững 100% kiến trúc chuyên sâu và kỹ thuật T-SQL.";
         scoreEl.className = "text-3xl font-extrabold text-emerald-600";
       } else if (score >= 7) {
-        feedbackEl.innerText = "Khá tốt! Bạn đã nắm chắc các khái niệm cốt lõi, hãy xem lại các câu sai để hoàn thiện.";
+        feedbackEl.innerText = "Khá tốt! Bạn đã hiểu đúng các nguyên lý quan trọng, hãy xem lại các câu sai để hoàn thiện.";
         scoreEl.className = "text-3xl font-extrabold text-blue-600";
       } else {
-        feedbackEl.innerText = "Cần ôn tập thêm! Hãy đọc lại phần Lý Thuyết Cốt Lõi và Cẩm Nang Fix Lỗi để nắm vững bản chất.";
+        feedbackEl.innerText = "Cần ôn tập thêm! Hãy đọc kỹ lại Tab Lý Thuyết Kiến Trúc & Cẩm Nang Lỗi.";
         scoreEl.className = "text-3xl font-extrabold text-rose-600";
       }
 
